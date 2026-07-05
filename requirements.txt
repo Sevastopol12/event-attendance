@@ -1,0 +1,4 @@
+reflex==0.9.5.post2
+sqlalchemy[asyncio]
+asyncpg
+python-dotenv
