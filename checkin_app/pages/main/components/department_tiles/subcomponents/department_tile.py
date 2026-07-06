@@ -1,7 +1,7 @@
 import reflex as rx
 
 from checkin_app.domain import Department
-from checkin_app.pages.main.state import MainState
+from checkin_app.pages.main.state import MainState, DepartmentState
 
 from checkin_app.styles.theme import NORTHERN_LIGHTS_COLORS
 
@@ -10,9 +10,9 @@ from ..styles import get_tile_base_styles, get_tile_hover_styles
 
 def department_tile(dept: Department) -> rx.Component:
     """Renders a compact, modern department tile optimized for all screens."""
-    attendance_count = MainState.attendance_for_selected_event[dept.id]
+    attendance_count = DepartmentState.attendance_for_selected_event[dept.id]
     is_active = attendance_count > 0
-    is_expired = MainState.selected_event_is_expired
+    is_expired = DepartmentState.selected_event_is_expired
 
     # Extract number from name (e.g., "Department 1" -> "1")
     dept_number = dept.name.split(" ")[1]
@@ -53,9 +53,9 @@ def department_tile(dept: Department) -> rx.Component:
             "transform": rx.cond(is_expired, "none", "scale(0.97)"),
             "box_shadow": "none",
         },
-        on_click=MainState.open_department_form(dept.id),
+        on_click=DepartmentState.open_department_form(dept.id),
         animation=rx.cond(
-            dept.id == MainState.last_toggled_department_id,
+            dept.id == DepartmentState.last_toggled_department_id,
             "tile_flash 0.8s ease-out",
             "none",
         ),

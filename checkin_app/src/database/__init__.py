@@ -1,3 +1,3 @@
-from .connection import get_async_session
+from .connection import get_session_scope, async_engine
 
-__all__ = ["get_async_session"]
+__all__ = ["get_session_scope", "async_engine"]

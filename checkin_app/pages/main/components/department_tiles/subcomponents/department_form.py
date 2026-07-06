@@ -1,5 +1,5 @@
 import reflex as rx
-from checkin_app.pages.main.state import MainState
+from checkin_app.pages.main.state import MainState, DepartmentState
 from checkin_app.styles.theme import NORTHERN_LIGHTS_COLORS
 
 
@@ -27,7 +27,7 @@ def department_count_form() -> rx.Component:
     )
 
     return rx.cond(
-        MainState.selected_department_id,
+        DepartmentState.selected_department_id,
         rx.box(
             # Backdrop for the modal
             rx.center(
@@ -44,8 +44,8 @@ def department_count_form() -> rx.Component:
                             ),
                             rx.text(
                                 rx.cond(
-                                    MainState.selected_department_id,
-                                    MainState.selected_department_name,
+                                    DepartmentState.selected_department_id,
+                                    DepartmentState.selected_department_name,
                                     "",
                                 ),
                                 font_family="Outfit",
@@ -59,7 +59,7 @@ def department_count_form() -> rx.Component:
                             tag="x",
                             size=20,
                             cursor="pointer",
-                            on_click=MainState.close_department_form,
+                            on_click=DepartmentState.close_department_form,
                             color=MainState.theme_colors["text_secondary"],
                         ),
                         justify="between",
@@ -82,7 +82,7 @@ def department_count_form() -> rx.Component:
                             # Decrement Button
                             rx.button(
                                 rx.icon(tag="minus", size=18),
-                                on_click=MainState.decrement_department_count,
+                                on_click=DepartmentState.decrement_department_count,
                                 width="40px",
                                 height="56px",
                                 padding="0",
@@ -109,8 +109,8 @@ def department_count_form() -> rx.Component:
                             ),
                             # Numeric Input
                             rx.input(
-                                value=MainState.department_count_input,
-                                on_change=MainState.set_department_count,
+                                value=DepartmentState.department_count_input,
+                                on_change=DepartmentState.set_department_count,
                                 placeholder="0",
                                 type="number",
                                 font_family="Outfit",
@@ -134,7 +134,7 @@ def department_count_form() -> rx.Component:
                             # Increment Button
                             rx.button(
                                 rx.icon(tag="plus", size=18),
-                                on_click=MainState.increment_department_count,
+                                on_click=DepartmentState.increment_department_count,
                                 width="40px",
                                 height="56px",
                                 padding="0",
@@ -173,7 +173,7 @@ def department_count_form() -> rx.Component:
                     rx.hstack(
                         rx.button(
                             "Cancel",
-                            on_click=MainState.close_department_form,
+                            on_click=DepartmentState.close_department_form,
                             variant="outline",
                             font_family="Outfit",
                             font_size="0.9rem",
@@ -185,7 +185,7 @@ def department_count_form() -> rx.Component:
                         ),
                         rx.button(
                             "Save Changes",
-                            on_click=MainState.save_department_count,
+                            on_click=DepartmentState.save_department_count,
                             bg=accent_color,
                             color="white",
                             font_family="Outfit",

@@ -1,5 +1,6 @@
-import pydantic
+from datetime import datetime
 from typing import Optional
+import pydantic
 
 class Department(pydantic.BaseModel):
     """Represents a department within the organization.
@@ -22,3 +23,15 @@ class AttendanceRecord(pydantic.BaseModel):
     event_id: str
     department_id: str
     count: int
+
+
+class EventItem(pydantic.BaseModel):
+    id: Optional[str]
+    title: str
+    time: str
+    status: str
+    is_expired: bool
+    description: str
+    start_at: datetime
+    end_at: datetime
+

@@ -1,5 +1,5 @@
 import reflex as rx
-from checkin_app.pages.main.state import MainState
+from checkin_app.pages.main.state import MainState, CarouselState
 from checkin_app.styles.visual_system import (
     get_unified_card_styles,
     get_unified_text_styles,
@@ -62,7 +62,7 @@ def description_card() -> rx.Component:
             ),
             # Content
             rx.text(
-                MainState.selected_event_description,
+                CarouselState.selected_event_description,
                 text_align="left",
                 font_size=rx.breakpoints(xs="0.95rem", sm="1rem", md="1.1rem"),
                 line_height="1.7",

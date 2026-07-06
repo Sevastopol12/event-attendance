@@ -1,6 +1,6 @@
 import reflex as rx
 
-from checkin_app.pages.main.state import MainState
+from checkin_app.pages.main.state import MainState, DepartmentState
 from .subcomponents import department_tile
 from .styles import unified_grid_style
 
@@ -23,7 +23,7 @@ def department_grid_skeleton() -> rx.Component:
 def department_grid() -> rx.Component:
     """Renders a responsive, space-efficient grid of department tiles."""
     actual_grid = rx.grid(
-        rx.foreach(MainState.departments, department_tile), 
+        rx.foreach(DepartmentState.departments, department_tile), 
         **unified_grid_style
     )
 

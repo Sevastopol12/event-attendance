@@ -1,6 +1,7 @@
 import reflex as rx
 
-from checkin_app.pages.main.state import MainState, EventItem
+from checkin_app.pages.main.state import MainState, CarouselState
+from checkin_app.domain import EventItem
 from .subcomponents import event_card
 from .utils import carousel_controller_script
 from .styles import DESKTOP_VIEWPORT_WIDTH, MOBILE_VIEWPORT_WIDTH, CARD_WIDTH_PX
@@ -16,7 +17,7 @@ def event_carousel() -> rx.Component:
                 # Scroll Area
                 rx.box(
                     rx.hstack(
-                        rx.foreach(MainState.events, event_card),
+                        rx.foreach(CarouselState.events, event_card),
                         spacing="4",
                         align="center",
                         width="max-content",
@@ -44,7 +45,7 @@ def event_carousel() -> rx.Component:
     )
 
     carousel_style = rx.cond(
-        MainState.carousel_ready,
+        CarouselState.carousel_ready,
         dict(
             opacity="1",
             animation="fade_in 0.6s ease-out forwards",
@@ -69,12 +70,12 @@ def event_carousel() -> rx.Component:
         MainState.is_data_loaded,
         rx.box(
             rx.cond(
-                ~MainState.carousel_ready,
+                ~CarouselState.carousel_ready,
                 skeleton,
             ),
             # Render arrows outside the animated container so they remain fixed to the viewport
             rx.cond(
-                MainState.carousel_ready,
+                CarouselState.carousel_ready,
                 progress_button_stack(),
                 rx.fragment(),
             ),
@@ -93,16 +94,16 @@ def carousel_progress_stack() -> rx.Component:
     return rx.vstack(
         rx.text(
             "Event ",
-            MainState.current_event_index,
+            CarouselState.current_event_index,
             " of ",
-            MainState.total_events_count,
+            CarouselState.total_events_count,
             color=MainState.theme_colors["text_secondary"],
             font_family="Outfit",
             font_size="0.85rem",
             font_weight="500",
         ),
         rx.progress(
-            value=(MainState.current_event_index / MainState.total_events_count) * 100,
+            value=(CarouselState.current_event_index / CarouselState.total_events_count) * 100,
             width="200px",
             color_scheme="teal",
             height="3px",
@@ -132,8 +133,8 @@ def progress_button_stack() -> rx.Component:
             rx.icon("chevron-left", size=20),
             variant="ghost",
             cursor="pointer",
-            on_click=MainState.go_prev_event,
-            disabled=~MainState.has_prev_event,
+            on_click=CarouselState.go_prev_event,
+            disabled=~CarouselState.has_prev_event,
             style={
                 "color": button_icon_color,
                 "width": {"sm": "20px", "md": "28px"},
@@ -157,8 +158,8 @@ def progress_button_stack() -> rx.Component:
             rx.icon("chevron-right", size=20),
             variant="ghost",
             cursor="pointer",
-            on_click=MainState.go_next_event,
-            disabled=~MainState.has_next_event,
+            on_click=CarouselState.go_next_event,
+            disabled=~CarouselState.has_next_event,
             style={
                 "color": button_icon_color,
                 "width": {"sm": "20px", "md": "28px"},
@@ -190,13 +191,13 @@ def carousel_animation() -> rx.Component:
     state_bridge = rx.input(
         id="scroll-bridge-input",
         style={"display": "none"},
-        on_change=MainState.select_event_from_scroll,
+        on_change=CarouselState.select_event_from_scroll,
     )
 
     ready_bridge = rx.input(
         id="carousel-ready-bridge",
         style={"display": "none"},
-        on_change=MainState.mark_carousel_ready,
+        on_change=CarouselState.mark_carousel_ready,
     )
 
     return rx.fragment(state_bridge, ready_bridge)

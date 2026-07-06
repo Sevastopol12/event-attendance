@@ -1,5 +1,5 @@
 import reflex as rx
-from checkin_app.pages.main.state import MainState
+from checkin_app.pages.main.state import MainState, DepartmentState, CarouselState
 
 
 def live_attendance_block() -> rx.Component:
@@ -34,7 +34,7 @@ def live_attendance_block() -> rx.Component:
         ),
         # Group 2: Live Indicator
         rx.cond(
-            MainState.selected_event_status == "On-going",
+            CarouselState.selected_event_status == "On-going",
             live_indicator_stack(),
             rx.fragment(),
         ),
@@ -72,7 +72,7 @@ def department_count_stack() -> rx.Component:
             # People count
             rx.hstack(
                 rx.text(
-                    MainState.present_department_count,
+                    DepartmentState.present_department_count,
                     font_family="Outfit",
                     font_size=rx.breakpoints(xs="2.2rem", sm="3rem", md="3.5rem"),
                     font_weight="800",
@@ -81,7 +81,7 @@ def department_count_stack() -> rx.Component:
                 ),
                 rx.text(
                     " / ",
-                    MainState.total_departments_count,
+                    DepartmentState.total_departments_count,
                     font_family="Outfit",
                     font_size="1.1rem",
                     font_weight="400",
@@ -118,7 +118,7 @@ def department_people_count_stack() -> rx.Component:
                 spacing="2",
             ),
             rx.text(
-                MainState.total_people_present,
+                DepartmentState.total_people_present,
                 font_family="Outfit",
                 font_size=rx.breakpoints(xs="2.2rem", sm="3rem", md="3.5rem"),
                 font_weight="800",

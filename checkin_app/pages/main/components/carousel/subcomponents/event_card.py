@@ -1,12 +1,13 @@
 import reflex as rx
 
-from checkin_app.pages.main.state import MainState, EventItem
+from checkin_app.pages.main.state import MainState, CarouselState
+from checkin_app.domain import EventItem
 from ..styles import CARD_WIDTH_PX
 
 
 def event_card(event: EventItem) -> rx.Component:
     """A selectable event card."""
-    is_active = event.id == MainState.selected_event_id
+    is_active = event.id == CarouselState.selected_event_id
 
     # Event time
     time_stack = rx.vstack(
@@ -103,5 +104,5 @@ def event_card(event: EventItem) -> rx.Component:
             f"linear-gradient(135deg, #0f172a 0%, {MainState.theme_colors['card_bg']} 100%)",
             f"linear-gradient(135deg, {MainState.theme_colors['bg']} 0%, {MainState.theme_colors['card_bg']} 100%)",
         ),
-        on_click=MainState.select_event(event.id),
+        on_click=CarouselState.select_event(event.id),
     )

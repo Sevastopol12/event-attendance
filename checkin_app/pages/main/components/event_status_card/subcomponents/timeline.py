@@ -1,5 +1,5 @@
 import reflex as rx
-from checkin_app.pages.main.state import MainState
+from checkin_app.pages.main.state import MainState, CarouselState
 
 def event_timeline() -> rx.Component:
     """A visual timeline component showing event progress with responsive constraints."""
@@ -7,7 +7,7 @@ def event_timeline() -> rx.Component:
         rx.flex(
             # Start Time
             rx.text(
-                MainState.selected_event_start_time_formatted,
+                CarouselState.selected_event_start_time_formatted,
                 font_family="Outfit",
                 font_weight="600",
                 font_size=rx.breakpoints(xs="0.8rem", sm="0.9rem"),
@@ -15,7 +15,7 @@ def event_timeline() -> rx.Component:
             ),
             # End Time
             rx.text(
-                MainState.selected_event_end_time_formatted,
+                CarouselState.selected_event_end_time_formatted,
                 font_family="Outfit",
                 font_weight="600",
                 font_size=rx.breakpoints(xs="0.8rem", sm="0.9rem"),
@@ -28,7 +28,7 @@ def event_timeline() -> rx.Component:
         # Progress bar
         rx.box(
             rx.box(
-                width=MainState.selected_event_progress_text,
+                width=CarouselState.selected_event_progress_text,
                 height=rx.breakpoints(xs="12px", sm="16px"),
                 background_color=MainState.theme_colors["aurora_teal"],
                 border_radius="20px",
